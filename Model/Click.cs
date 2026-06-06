@@ -2,7 +2,7 @@
 
 namespace Url_Shortner_Backend.Model;
 
-public class Clicks
+public class Click
 {
     [Key] public Guid ClickId { get; set; } = Guid.NewGuid();
     
