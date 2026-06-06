@@ -17,4 +17,6 @@ public class Url
     public DateTime UpdatedAt { get; set; }
     
     public bool IsActive { get; set; }  = true;
+
+    public List<Click> Clicks { get; set; } = [];
 }
