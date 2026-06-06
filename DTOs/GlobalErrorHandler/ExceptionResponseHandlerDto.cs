@@ -1,6 +1,6 @@
 ﻿namespace Url_Shortner_Backend.DTOs.GlobalErrorHandler;
 
-public class ExceptionResponseHandler
+public class ExceptionResponseHandlerDto
 {
     public int Status { get; set; }
     public string Title { get; set; }
