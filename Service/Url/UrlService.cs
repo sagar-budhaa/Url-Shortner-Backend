@@ -7,7 +7,17 @@ public class UrlService(AppDbContext context) : IUrlService
 {
     public Task<List<UrlResponseDto>> GetAllUrls()
     {
-        throw new NotImplementedException();
+        var urls = context.Urls.ToList();
+        var urlResponseDtos = urls.Select(
+            url => new UrlResponseDto()
+            {
+                OriginalUrl = url.OriginalUrl,
+                ShortUrl = url.ShortUrl,
+                IsSuccess = true,
+                CreatedAt = url.CreatedAt,
+                UpdatedAt = url.UpdatedAt,
+            }).ToList();
+        return Task.FromResult(urlResponseDtos);
     }
 
     public Task<UrlResponseDto> GetOriginalUrl(string shortUrl)

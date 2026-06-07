@@ -5,4 +5,6 @@ public class UrlResponseDto
     public string OriginalUrl { get; set; }
     public string ShortUrl { get; set; }
     public bool IsSuccess { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }
