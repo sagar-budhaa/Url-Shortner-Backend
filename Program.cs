@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Url_Shortner_Backend.Data;
 using Url_Shortner_Backend.Middleware;
+using Url_Shortner_Backend.Service.lib;
 using Url_Shortner_Backend.Service.Url;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 builder.Services.AddScoped<IUrlService, UrlService>();
+builder.Services.AddScoped<IShortUrlGenerator, ShortUriGenerator>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
