@@ -1,9 +1,10 @@
 ﻿using Url_Shortner_Backend.Data;
 using Url_Shortner_Backend.DTOs.Url;
+using Url_Shortner_Backend.Service.lib;
 
 namespace Url_Shortner_Backend.Service.Url;
 
-public class UrlService(AppDbContext context) : IUrlService
+public class UrlService(AppDbContext context, IShortUrlGenerator uriGenerator) : IUrlService
 {
     public Task<List<UrlResponseDto>> GetAllUrls()
     {
@@ -25,9 +26,25 @@ public class UrlService(AppDbContext context) : IUrlService
         throw new NotImplementedException();
     }
 
-    public Task<UrlResponseDto> CreateShortUrl(UrlRequestDto urlRequestDto)
+    public async Task<UrlResponseDto> CreateShortUrl(UrlRequestDto urlRequestDto)
     {
-        throw new NotImplementedException();
+        var originalUrl = urlRequestDto.OriginalUrl;
+        var shortUrl = uriGenerator.GenerateShortUri();
+        var url = new Model.Url
+        {
+            OriginalUrl = originalUrl,
+            ShortUrl = shortUrl
+        };
+        context.Urls.Add(url);
+        await context.SaveChangesAsync();
+        return new UrlResponseDto
+        {
+            OriginalUrl = originalUrl,
+            ShortUrl = shortUrl,
+            IsSuccess = true,
+            CreatedAt = url.CreatedAt,
+            UpdatedAt = url.UpdatedAt,
+        };
     }
 
     public Task<UrlResponseDto> UpdateShortUrl(UrlRequestDto urlRequestDto)
