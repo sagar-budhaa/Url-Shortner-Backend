@@ -1,8 +1,9 @@
-﻿using Url_Shortner_Backend.DTOs.Url;
+﻿using Url_Shortner_Backend.Data;
+using Url_Shortner_Backend.DTOs.Url;
 
 namespace Url_Shortner_Backend.Service.Url;
 
-public class UrlService : IUrlService
+public class UrlService(AppDbContext context) : IUrlService
 {
     public Task<List<UrlResponseDto>> GetAllUrls()
     {
