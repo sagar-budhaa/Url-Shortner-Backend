@@ -3,8 +3,21 @@ using Url_Shortner_Backend.DTOs.GlobalErrorHandler;
 
 namespace Url_Shortner_Backend.Middleware;
 
-public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, RequestDelegate next) : IExceptionHandler
 {
+
+    public async Task InvokeAsync(HttpContext httpContext, ILogger<GlobalExceptionHandler> logger)
+    {
+        try
+        {
+            await next(httpContext);
+        }
+        catch (Exception ex)
+        {
+            await TryHandleAsync(httpContext, ex, CancellationToken.None);
+        }
+    }
+    
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         logger.LogError(exception, "Unhandled exception: {Message}", exception.Message);
