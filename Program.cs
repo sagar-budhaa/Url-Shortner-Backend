@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Url_Shortner_Backend.Data;
+using Url_Shortner_Backend.Service.Url;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString)));
+
+
+builder.Services.AddScoped<IUrlService, UrlService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
