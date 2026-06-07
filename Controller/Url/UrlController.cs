@@ -12,8 +12,17 @@ public class UrlController(IUrlService urlService) : ControllerBase
     [HttpGet]
     public ActionResult<List<UrlResponseDto>> Get()
     {
-        var urls = urlService.GetAllUrls().Result;
-        return Ok(urls);
+        var result = urlService.GetAllUrls().Result;
+        return Ok(result);
+    }
+
+
+
+    [HttpPost]
+    public ActionResult<UrlResponseDto> Post([FromBody] UrlRequestDto urlRequestDto)
+    {
+        var result = urlService.CreateShortUrl(urlRequestDto).Result;
+        return Ok(result);
     }
     
 }
